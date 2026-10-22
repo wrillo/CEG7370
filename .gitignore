@@ -1,0 +1,14 @@
+# Custom Folders to Ignore
+Group Project/
+Articles/
+Homework/
+
+# Archieves
+*.zip
+
+# Standard C#/.NET Builds
+bin/
+obj/
+*.user
+*.suo
+.vs/
