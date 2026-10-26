@@ -15,10 +15,10 @@ HLS estimated a 10.204 ns clock period against the 10 ns
 target; this is not a post-route timing result or confirmed 100 MHz closure.
 The installation was located at `C:\AMDDesignTools\2026.1`.
 
-## 1. Open PowerShell in this folder
+## 1. Open PowerShell
 
 ```powershell
-Set-Location 'C:\Users\Public\VitisProjects\AES_FPGA_Accelerators'
+Set-Location 'drive:\directory\path\can\not\have\spaces\AES_FPGA_Accelerators'
 $tools = 'C:\AMDDesignTools\2026.1'
 ```
 
