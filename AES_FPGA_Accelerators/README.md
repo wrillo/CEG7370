@@ -5,16 +5,6 @@ Two VHDL, two Verilog, one HLS C++ implementation are in `implementations/`.
 See [SOURCES.md](SOURCES.md) for architecture differences, published sources,
 exact revisions, licenses, and wrapper modifications.
 
-**Status (October 26, 2026):** the user completed the full HLS configuration-file
-flow: C simulation passed 256 vectors, HLS synthesis completed, Verilog C/RTL
-co-simulation passed 256 vectors, and Vivado IP packaging completed. Hadipour
-also completed step 4: all verification and benchmark outputs matched, active
-and idle power reports were generated, and the summary CSV was written.
-YAAES, Secworks, CMT, and HLS still need their step 4 benchmark runs.
-HLS estimated a 10.204 ns clock period against the 10 ns
-target; this is not a post-route timing result or confirmed 100 MHz closure.
-The installation was located at `C:\AMDDesignTools\2026.1`.
-
 ## 1. Open PowerShell
 
 ```powershell
@@ -42,9 +32,6 @@ public interfaces is conventional hexadecimal: first byte in bits 127:120.
 
 ### C simulation only
 
-The tested installation omitted the design source in the legacy Tcl flow.
-The configuration-file flow compiled both C++ files and passed all 256 vectors.
-Do not rerun the old `--tcl scripts/run_hls.tcl` command.
 For a quick C-only check, use this command from the project root. It is optional
 when running the full build, which already includes C simulation:
 
@@ -56,8 +43,7 @@ when running the full build, which already includes C simulation:
 
 The config uses paths relative to `scripts/hls_csim.cfg`, so it can be copied
 with the project. The testbench now prefixes input strings with `0x` to avoid
-misparsing hexadecimal values beginning with `0b` or `0d`. This corrects the
-observed mismatch at vector 44. The user's rerun confirmed
+misparsing hexadecimal values beginning with `0b` or `0d`. Expected output:
 `PASS: 256 AES-128 ECB vectors` and `CSim done with 0 errors`.
 
 This command runs C simulation only. It does not produce the synthesized RTL
@@ -75,13 +61,6 @@ that order, stopping if any step fails. It uses `scripts/hls_build.cfg`.
 Outputs are in `build/hls_component/hls/`; inspect synthesis reports in
 `syn/report/`, co-simulation reports in `sim/report/`, and the exported IP under
 `impl/ip/`. The power benchmark reads the exported RTL from this component.
-The user completed this flow successfully. The log reported
-`C/RTL co-simulation finished: PASS`, created
-`impl/ip/xilinx_com_hls_aes128_ecb_hls_1_0.zip`, and ended with
-`HLS flow completed`. Exported Verilog is in `impl/ip/hdl/verilog/`.
-These results verify the HLS test cases and packaging, not routed timing or power.
-There is no need to repeat step 3 before step 4 unless the design, configuration,
-or test inputs change, or the generated component is missing.
 
 Optimization pragmas include complete partitioning of round keys and unrolled
 byte conversion in the wrapper. The published primitive additionally pipelines
